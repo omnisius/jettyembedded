@@ -14,12 +14,7 @@ public class App
 
     public static void main( String[] args )
     {
-        ResourceConfig config = new ResourceConfig();
-        config.packages(PACKAGE_NAME);
-        Server server = new Server(PORT);
-        ServletContextHandler context = new ServletContextHandler(server, PATH_SPEC);
-        ServletHolder servlet = new ServletHolder(new ServletContainer(config));
-        context.addServlet(servlet, PATH_SPEC);
+        Server server = getServer();
 
         try
         {
@@ -34,5 +29,15 @@ public class App
         {
             server.destroy();
         }
+    }
+
+    public static Server getServer() {
+        ResourceConfig config = new ResourceConfig();
+        config.packages(PACKAGE_NAME);
+        Server server = new Server(PORT);
+        ServletContextHandler context = new ServletContextHandler(server, PATH_SPEC);
+        ServletHolder servlet = new ServletHolder(new ServletContainer(config));
+        context.addServlet(servlet, PATH_SPEC);
+        return server;
     }
 }
